@@ -7,6 +7,8 @@ import { API_ENDPOINTS, ForgotPasswordSteps, REGEX } from '../../../shared/const
 // import { matchPassword } from '../../shared/validators/matchPassword.validator';
 // import { matchPassword } from '../../shared/validators/matchPassword.validator';
 import { CommonService } from '../../../shared/services/common/common.service';
+import { error } from 'node:console';
+import { interval, Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-forgot-password',
@@ -21,6 +23,9 @@ export class ForgotPasswordComponent {
   // private _snackBar = inject(MatSnackBar);
   ForgotPasswordSteps = ForgotPasswordSteps;
   currentStep : ForgotPasswordSteps = ForgotPasswordSteps.VERIFY_EMAIL;
+  countDown = 2;
+  countDownSubscription!: Subscription;
+  resendOtpDisabled: boolean = false;
 
   constructor(
     private fb: FormBuilder,
@@ -44,6 +49,24 @@ export class ForgotPasswordComponent {
     });
   }
 
+  startResendOtpCountDown(){
+    this.resendOtpDisabled = true;
+    this.countDown = 20;
+    if(this.countDownSubscription){
+      this.countDownSubscription.unsubscribe();
+    }
+
+    this.countDownSubscription = interval(1000).subscribe(() => {
+      if(this.countDown > 0){
+        this.countDown--;
+      }else{
+        this.resendOtpDisabled = false;
+        this.countDownSubscription.unsubscribe();
+      }
+    })
+    
+  }
+
   onForgotPasswordSubmit(){
     // this.forgotPasswordForm.controls['otp'].enable();
     switch (this.currentStep) {
@@ -57,7 +80,7 @@ export class ForgotPasswordComponent {
         this.verifyOtp();
         break;
       case ForgotPasswordSteps.RESET_PASSWORD:
-        this.resetOtp();
+        this.resetPassword();
         break;
     
     }
@@ -65,22 +88,57 @@ export class ForgotPasswordComponent {
   }
 
   verfyEmail(){
-    this.currentStep = ForgotPasswordSteps.SEND_OTP;
+    console.log(this.forgotPasswordForm);
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_verify_email, this.forgotPasswordForm.value).subscribe((resp: any) => {
+      console.log(resp);
+      this.commonService.openSnackBar(resp.message, 'success');
+      
+      this.currentStep = ForgotPasswordSteps.SEND_OTP;
+    }, (error) => {
+      this.commonService.openSnackBar(error.error.message, 'error');
+    })
   }
   
   sendOtp(){
-    this.currentStep = ForgotPasswordSteps.VERIFY_OTP;
-    this.forgotPasswordForm.get('otp')?.enable();
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_send_otp, this.forgotPasswordForm.value).subscribe((resp: any) => {
+      console.log(resp);
+      this.commonService.openSnackBar(resp.message, 'success');
+      this.currentStep = ForgotPasswordSteps.VERIFY_OTP;
+      this.forgotPasswordForm.get('otp')?.enable();
+      this.startResendOtpCountDown();
+    }, (error) => {
+      this.commonService.openSnackBar(error.error.message, 'error')
+    })
+  }
+  
+  resendOtp(){
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_resend_otp, this.forgotPasswordForm.value).subscribe((resp: any) => {
+      this.commonService.openSnackBar(resp.message, 'success');
+      
+      this.startResendOtpCountDown();
+    }, (error) => {
+      this.commonService.openSnackBar(error.error.message, 'error');
+    })
   }
   
   verifyOtp(){
-    this.currentStep = ForgotPasswordSteps.RESET_PASSWORD;
-    this.forgotPasswordForm.get('newPassword')?.enable();
-    this.forgotPasswordForm.get('confirmPassword')?.enable();
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_verify_otp, this.forgotPasswordForm.value).subscribe((resp: any) => {
+      this.commonService.openSnackBar(resp.message, 'success');
+      this.currentStep = ForgotPasswordSteps.RESET_PASSWORD;
+      this.forgotPasswordForm.get('newPassword')?.enable();
+      this.forgotPasswordForm.get('confirmPassword')?.enable();
+    }, (error) => {
+      this.commonService.openSnackBar(error.error.message, 'error');
+    })
   }
 
-  resetOtp(){
-    this.router.navigateByUrl('/login');
+  resetPassword(){
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_reset_password, this.forgotPasswordForm.value).subscribe((resp: any) => {
+      this.commonService.openSnackBar(resp.message, 'success');
+      this.router.navigateByUrl('/login');
+    }, (error) => {
+      this.commonService.openSnackBar(error.error.message, 'error')
+    })
   }
 
   onCancel(){

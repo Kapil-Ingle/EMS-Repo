@@ -48,12 +48,12 @@ export class LoginComponent {
     if(this.loginForm.valid){
       this.AuthService.authApiCall(API_ENDPOINTS.serviceName_login, this.loginForm.value).subscribe((resp: any) => {
         console.log(`${API_ENDPOINTS.serviceName_login} Response : `, resp);
-        sessionStorage.setItem('authToken', resp?.token)
-        this.commonService.openSnackBar('Login Successful', 'success')
+        sessionStorage.setItem('authToken', resp?.token);
+        this.commonService.openSnackBar('Login Successful', 'success');
       }, (error) => {
         console.log(error.error);
         
-        this.commonService.openSnackBar(error.error.message, 'error')
+        this.commonService.openSnackBar(error.error.message, 'error');
         
         // this.commonService.openSnackbar(`Error in ${API_ENDPOINTS.serviceName_login}`, 'close', 'red');
       })

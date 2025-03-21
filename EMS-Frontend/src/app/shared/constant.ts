@@ -1,5 +1,10 @@
 const API_ENDPOINTS = {
     serviceName_login: 'api/auth/login',
+    serviceName_verify_email: 'api/auth/verify-email',
+    serviceName_send_otp: 'api/auth/send-otp',
+    serviceName_resend_otp: 'api/auth/resend-otp',
+    serviceName_verify_otp: 'api/auth/verify-otp',
+    serviceName_reset_password: 'api/auth/reset-password',
     serviceName_signup: 'authenticateUser/signup',
     serviceName_logout: 'authenticateUser/logout'
 }
