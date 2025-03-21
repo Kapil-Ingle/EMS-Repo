@@ -7,8 +7,8 @@ const createUser = async (req, res) => {
     try{
         const hashedPassword = await bcrypt.hash('admin', 10);
         const newUser = new User({
-            name: 'Admin',
-            email: 'admin@gmail.com',
+            name: 'Kapil Ingle',
+            email: 'codingkapil@gmail.com',
             password: hashedPassword,
             role: 'admin'
         })
