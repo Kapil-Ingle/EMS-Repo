@@ -1,0 +1,28 @@
+<mat-sidenav-container class="sidenav-container">
+  <mat-sidenav mode="side" opened [ngClass]="commonService.expandSidenav() ? 'expand' : 'colaps'">
+    <div class="sidenav-header">
+      <img src="assets/my_profile_pic.jpg" alt="profile-pic">
+      <div class="header-text">
+        <h2>{{userData.name}}</h2>
+        <p>{{userData.role}}</p>
+      </div>
+    </div>
+    <mat-nav-list>
+      @for(item of menuItems(); track item.title){
+        <a mat-list-item (click)="navigateTo(item.route)">
+          <mat-icon matListItemIcon >{{item.icon}}</mat-icon>
+          @if(commonService.expandSidenav()){
+            <span matListItemTitle>{{item.title}}</span>
+          }
+        </a>
+      }
+      <a mat-list-item style="margin-top: 1%;">
+        <mat-icon matListItemIcon>logout</mat-icon>
+        <span matListItemTitle>Logout</span>
+      </a>
+    </mat-nav-list>
+  </mat-sidenav>
+  <mat-sidenav-content [ngClass]="commonService.expandSidenav() ? 'margin-expand' : 'margin-colaps'">
+    <ng-content></ng-content>
+  </mat-sidenav-content>
+</mat-sidenav-container>

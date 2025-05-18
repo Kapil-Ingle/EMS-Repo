@@ -37,9 +37,9 @@ export class LoginComponent {
   buildForm(){
     // Login form
     this.loginForm = this.fb.group({
-      email: ['', Validators.required],
+      email: ['codingkapil@gmail.com', Validators.required],
       // password: ['', [Validators.required, Validators.pattern(REGEX.PASSWORD_REGEX)]]
-      password: ['', [Validators.required]]
+      password: ['Kapil@1996', [Validators.required]]
     });
   }
 
@@ -49,7 +49,9 @@ export class LoginComponent {
       this.AuthService.authApiCall(API_ENDPOINTS.serviceName_login, this.loginForm.value).subscribe((resp: any) => {
         console.log(`${API_ENDPOINTS.serviceName_login} Response : `, resp);
         sessionStorage.setItem('authToken', resp?.token);
+        sessionStorage.setItem('userData', JSON.stringify(resp?.data.user));
         this.commonService.openSnackBar('Login Successful', 'success');
+        this.router.navigateByUrl('dashboard');
       }, (error) => {
         console.log(error.error);
         

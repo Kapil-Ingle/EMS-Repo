@@ -6,16 +6,20 @@ dotenv.config({path: './.env'});
 import connectToDatabase from "./db/db.js";
 import verifyTokenMiddleware from './middleware/verfyTokenMiddleware.js';
 import functionalitiesRouter from './routes/functionalities.js';
+import setupSwagger from './swagger/swagger.js';
 
 connectToDatabase();
 const app = express();
 app.use(cors());
 app.use(express.json());
 
+// For swagger
+setupSwagger(app);
+
 app.use('/api/auth',authRouter);
 
 // Custom middleware
-app.use(verifyTokenMiddleware);
+// app.use(verifyTokenMiddleware);
 // Protected routes 
 app.use('/api/data',functionalitiesRouter);
 

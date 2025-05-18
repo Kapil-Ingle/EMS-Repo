@@ -6,7 +6,8 @@ const API_ENDPOINTS = {
     serviceName_verify_otp: 'api/auth/verify-otp',
     serviceName_reset_password: 'api/auth/reset-password',
     serviceName_signup: 'authenticateUser/signup',
-    serviceName_logout: 'authenticateUser/logout'
+    serviceName_logout: 'authenticateUser/logout',
+    serviceName_sidemenu: 'api/data/sidemenu'
 }
 
 // Use regex for JavaScript ('\' is a escape charector hence use it twice)

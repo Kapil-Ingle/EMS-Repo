@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, signal } from '@angular/core';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { SnackBarComponent } from '../../widget/snack-bar/snack-bar.component';
 
@@ -6,6 +6,8 @@ import { SnackBarComponent } from '../../widget/snack-bar/snack-bar.component';
   providedIn: 'root'
 })
 export class CommonService {
+
+  expandSidenav =  signal<boolean>(true)
 
   constructor(
     private _snackBar: MatSnackBar
@@ -19,6 +21,10 @@ export class CommonService {
       verticalPosition: 'top',
       panelClass: type === 'success' ? 'sucess-snackbar' : 'error-snackbar'
     })
+  }
+
+  toggleSidenav(){
+
   }
   
 }
