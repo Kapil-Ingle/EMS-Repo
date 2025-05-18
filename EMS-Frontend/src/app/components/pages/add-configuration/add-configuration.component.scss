@@ -1,0 +1,26 @@
+.form-container{
+    display: flex;
+    flex-wrap: wrap;
+    flex-direction: row;
+    mat-form-field {
+        margin-left: 20px;
+    }
+}
+
+.dialog-header {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.dialog-title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  margin: 0;
+  font-weight: 600;
+}
+
+.spacer {
+  flex: 1;
+}

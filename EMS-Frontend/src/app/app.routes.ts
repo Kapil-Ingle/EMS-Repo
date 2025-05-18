@@ -14,7 +14,7 @@ export const routes: Routes = [
             {path: 'leave-management', loadComponent: () => import('./components/pages/leave-management/leave-management.component').then((c) => c.LeaveManagementComponent)},
             {path: 'sales', loadComponent: () => import('./components/pages/sales/sales.component').then((c) => c.SalesComponent)},
             {path: 'payroll', loadComponent: () => import('./components/pages/payroll/payroll.component').then((c) => c.PayrollComponent)},
-            {path: 'reports', loadComponent: () => import('./components/pages/reports/reports.component').then((c) => c.ReportsComponent)},
+            {path: 'configuration', loadComponent: () => import('./components/pages/configuration/configuration.component').then((c) => c.ConfigurationComponent)},
         ]
     }
 ];

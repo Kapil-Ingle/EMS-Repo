@@ -1,0 +1,28 @@
+<div class="dialog-header">
+  <span class="spacer"></span>
+  <h2 mat-dialog-title class="dialog-title">Add New Dropdown</h2>
+  <button mat-icon-button (click)="close()" aria-label="Close">
+    <mat-icon>close</mat-icon>
+  </button>
+</div>
+
+<mat-dialog-content>
+    <form class="form-container">
+        <mat-form-field>
+          <mat-label>Dropdown Name</mat-label>
+          <input matInput  />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Dropdown Value</mat-label>
+          <input matInput  />
+        </mat-form-field>
+        <mat-form-field>
+          <mat-label>Description</mat-label>
+          <input matInput  />
+        </mat-form-field>
+    </form>
+</mat-dialog-content>
+<mat-dialog-actions align="center">
+  <!-- <button mat-button>No Thanks</button> -->
+  <button mat-button cdkFocusInitial>Submit </button>
+</mat-dialog-actions>
