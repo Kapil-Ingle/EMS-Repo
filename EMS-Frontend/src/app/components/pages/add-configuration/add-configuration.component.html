@@ -7,22 +7,36 @@
 </div>
 
 <mat-dialog-content>
-    <form class="form-container">
+    <form [formGroup]="addDropdownForm" class="form-container">
+      <div class="row-1">
         <mat-form-field>
           <mat-label>Dropdown Name</mat-label>
-          <input matInput  />
+          <input matInput formControlName="dorpdownName" />
         </mat-form-field>
-        <mat-form-field>
-          <mat-label>Dropdown Value</mat-label>
-          <input matInput  />
-        </mat-form-field>
+        
         <mat-form-field>
           <mat-label>Description</mat-label>
-          <input matInput  />
+          <input matInput formControlName="description" />
         </mat-form-field>
+      </div>
+      <div formArrayName="dropdownValues">
+        <div class="row-2">
+          @for(value of dropdownValues.controls; track value; let idx = $index){
+            <div>
+              <mat-form-field>
+                <mat-label>Dropdown Value</mat-label>
+                <input matInput [formControlName]="idx" />
+              </mat-form-field>
+              <button type="button" mat-icon-button (click)="idx === dropdownValues.controls.length - 1 ? addDropdownValue() : removeDropdownValue(idx)" aria-label="Close">
+                <mat-icon>{{idx === dropdownValues.controls.length - 1 ? 'add' : 'close'}}</mat-icon>
+              </button>
+            </div>
+          }
+        </div>
+      </div>
     </form>
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <!-- <button mat-button>No Thanks</button> -->
-  <button mat-button cdkFocusInitial>Submit </button>
+  <button class="btn" mat-flat-button cdkFocusInitial (click)="SubmitData()">Submit </button>
 </mat-dialog-actions>

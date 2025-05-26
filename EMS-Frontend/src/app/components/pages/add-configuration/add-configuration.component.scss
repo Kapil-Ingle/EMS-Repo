@@ -24,3 +24,20 @@
 .spacer {
   flex: 1;
 }
+
+.row-1{
+  display: flex;
+  flex-direction: column;
+}
+
+.row-2{
+    display: flex;
+    flex-direction: column;
+}
+
+.btn{
+    border-radius: 5px;
+    height: 52px;
+    background-color: #3f51b5;
+    width: 50%; 
+}
