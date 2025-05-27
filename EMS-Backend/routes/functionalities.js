@@ -1,6 +1,6 @@
 import express from "express";
 import sidenavMenu from "../controllers/sidenavController.js";
-import { createDropdown, getDropdown } from "../controllers/commonController.js";
+import { createDropdown, getDropdown, getAllDropdowns } from "../controllers/commonController.js";
 
 const router = express.Router();
 
@@ -64,7 +64,7 @@ const router = express.Router();
  * @swagger
  * /api/data/get-dropdown:
  *   post:
- *     summary: Fetch Dropdown
+ *     summary: Fetch Single Dropdown
  *     tags:
  *       - Get Dropdown
  *     requestBody:
@@ -85,9 +85,24 @@ const router = express.Router();
  *         description: Server error
  */
 
+/**
+ * @swagger
+ * /api/data/get-all-dropdowns:
+ *   get:
+ *     summary: Fetch All Dropdowns
+ *     tags:
+ *       - Get Dropdowns
+ *     responses:
+ *       200:
+ *         description: List of all dropdowns fetched successfully
+ *       500:
+ *         description: Server error
+ */
+
 
 router.post('/sidemenu',sidenavMenu);
 router.post('/create-dropdown', createDropdown)
 router.post('/get-dropdown', getDropdown)
+router.get('/get-all-dropdowns', getAllDropdowns)
 
 export default router;
