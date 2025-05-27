@@ -3,23 +3,23 @@ import mongoose from "mongoose";
 const sidenavMenuSchema = new mongoose.Schema({
     title: {
         type: String,
-        require: [true, 'Title is the required field!']
+        required: [true, 'Title is the required field!']
     },
     icon: {
         type: String,
-        require: [true, 'Icon is the required field!']
+        required: [true, 'Icon is the required field!']
     },
     route: {
         type: String,
-        require: [true, 'Route Name is the required field!']
+        required: [true, 'Route Name is the required field!']
     },
     sequence: {
         type: Number,
-        require: [true, 'Sequence is the required field!']
+        required: [true, 'Sequence is the required field!']
     },
     role: {
         type: String,
-        require: [true, 'Role is the required field!']
+        required: [true, 'Role is the required field!']
     }
 });
 

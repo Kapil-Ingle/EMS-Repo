@@ -22,4 +22,31 @@ const createDropdown = async (req, res) => {
     }
 }
 
-export { createDropdown }
+const getDropdown = async (req, res) => {
+    try {
+        const dropdownName = req.body.dropdownName;
+        const dropdown = await Dropdown.findOne({dropdownName});
+        
+        if(!dropdown){
+            return res.status(404).json({
+                status: 'fail',
+                message: 'Dropdown not found'
+            })
+        }
+
+        return res.status(200).json({
+            status: 'success',
+            data:{
+                dropdown
+            }
+        })
+
+    }catch(error) {
+        res.status(500).json({
+            status: 'fail',
+            message: error.message
+        })
+    }
+}
+
+export { createDropdown, getDropdown }
