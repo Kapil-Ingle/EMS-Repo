@@ -7,7 +7,10 @@ const API_ENDPOINTS = {
     serviceName_reset_password: 'api/auth/reset-password',
     serviceName_signup: 'authenticateUser/signup',
     serviceName_logout: 'authenticateUser/logout',
-    serviceName_sidemenu: 'api/data/sidemenu'
+    serviceName_sidemenu: 'api/data/sidemenu',
+    serviceName_create_dropdown: 'api/data/create-dropdown',
+    serviceName_get_all_dropdowns: 'api/data/get-all-dropdowns',
+    serviceName_get_dropdown: 'api/data/get-dropdown',
 }
 
 // Use regex for JavaScript ('\' is a escape charector hence use it twice)

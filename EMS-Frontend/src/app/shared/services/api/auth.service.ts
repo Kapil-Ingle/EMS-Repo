@@ -12,7 +12,7 @@ export class AuthService {
     private http: HttpClient
   ) { }
 
-  // Post request for Login and Signup
+  // Post request for Login, Signup and All
   authApiCall(endPoint: string, request: any){
     return this.http.post(`${this.apiUrl}${endPoint}`, request);
   }
@@ -27,6 +27,11 @@ export class AuthService {
       })
       return this.http.post(`${this.apiUrl}${endPoint}`,request,{ headers: newHeader })
     // }
+  }
+
+  // Common get request for All
+  getData(endPoint: string){
+    return this.http.get(`${this.apiUrl}${endPoint}`)
   }
   
 }

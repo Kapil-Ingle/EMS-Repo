@@ -3,6 +3,9 @@ import { SharedModule } from '../../../shared/shared.module';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material/dialog';
 import { FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
+import { AuthService } from '../../../shared/services/api/auth.service';
+import { API_ENDPOINTS } from '../../../shared/constant';
+import { CommonService } from '../../../shared/services/common/common.service';
 
 @Component({
   selector: 'app-add-configuration',
@@ -15,7 +18,9 @@ export class AddConfigurationComponent {
 
   constructor(
     private dialogRef: MatDialogRef<AddConfigurationComponent>,@Inject(MAT_DIALOG_DATA) public data: any,
-    private fb: FormBuilder
+    private fb: FormBuilder,
+    private AuthService: AuthService,
+    private commonService: CommonService,
   ){}
 
   addDropdownForm!: FormGroup;
@@ -26,7 +31,7 @@ export class AddConfigurationComponent {
 
   buildForm(){
     this.addDropdownForm = this.fb.group({
-      dorpdownName: ['', Validators.required],
+      dropdownName: ['', Validators.required],
       dropdownValues: this.fb.array([
         this.fb.control('', Validators.required)
       ]),
@@ -44,7 +49,13 @@ export class AddConfigurationComponent {
   
   SubmitData(){
     console.log(this.addDropdownForm);
-    this.dialogRef.close();
+    if(this.addDropdownForm.valid){
+      this.AuthService.authApiCall(API_ENDPOINTS.serviceName_create_dropdown,this.addDropdownForm.value).subscribe((resp: any) => {
+        console.log(`${API_ENDPOINTS.serviceName_create_dropdown} Response : `, resp);
+        this.commonService.openSnackBar('Dropdown Fetched Successful', 'success');
+      })
+      this.dialogRef.close();
+    }
 
   }
 
