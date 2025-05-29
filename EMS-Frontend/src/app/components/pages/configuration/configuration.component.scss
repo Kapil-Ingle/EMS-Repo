@@ -4,6 +4,13 @@
     background-color: #3f51b5;
 }
 
+button.edit {
+  color: #3f51b5;
+}
+button.delete {
+  color: #B00020;
+}
+
 table {
   width: 100%;
 }
@@ -12,10 +19,6 @@ table {
   font-size: 14px;
   width: 100%;
 }
-
-// td, th {
-//   width: 25%;
-// }
 
 .dsc-cell {
       width: 30%;
@@ -28,3 +31,34 @@ padding: 20px;
 .row {
     margin-bottom: 15px;
 }
+
+.action-cell {
+  display: flex;
+  align-items: center;
+  .text{
+    text-align: center;
+  }
+  .button {
+    display: none;
+  }
+}
+
+.mat-mdc-row:hover .mat-mdc-cell {
+  .action-cell {
+    display: flex;
+    align-items: center;
+    .text{
+      text-align: center;
+      opacity: 0.3;
+    }
+    .button {
+      display: flex;
+      position: absolute;
+      right: 42px;
+      z-index: 5;
+    }
+  }
+}
+
+
+

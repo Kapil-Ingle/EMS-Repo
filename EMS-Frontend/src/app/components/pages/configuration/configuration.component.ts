@@ -73,4 +73,14 @@ export class ConfigurationComponent {
     }
   }
 
+  editDropdown(){
+    console.log('Edit');
+    
+  }
+
+  deleteDropdown(){
+    console.log('Delete');
+    
+  }
+
 }
