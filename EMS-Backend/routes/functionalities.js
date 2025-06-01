@@ -1,6 +1,6 @@
 import express from "express";
 import sidenavMenu from "../controllers/sidenavController.js";
-import { createDropdown, getDropdown, getAllDropdowns } from "../controllers/commonController.js";
+import { createDropdown, getDropdown, getAllDropdowns, editDropdown, deleteDropdown } from "../controllers/commonController.js";
 
 const router = express.Router();
 
@@ -104,5 +104,7 @@ router.post('/sidemenu',sidenavMenu);
 router.post('/create-dropdown', createDropdown)
 router.post('/get-dropdown', getDropdown)
 router.get('/get-all-dropdowns', getAllDropdowns)
+router.post('/edit-dropdowns', editDropdown)
+router.post('/delete-dropdowns', deleteDropdown)
 
 export default router;

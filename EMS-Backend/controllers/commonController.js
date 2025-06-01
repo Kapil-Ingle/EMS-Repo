@@ -7,12 +7,14 @@ const createDropdown = async (req, res) => {
         const dropdownData = new Dropdown({
             dropdownName,
             dropdownValues,
-            description
+            description,
+            createdAt: new Date(),
+            updatedAt: undefined
         });
         await dropdownData.save();
         res.status(200).json({
             status: 'success',
-            message: 'Dropdown data saved successfully!'
+            message: 'Dropdown created successfully!'
         })
     }catch(error){
         res.status(500).json({
@@ -62,7 +64,7 @@ const getAllDropdowns = async (req, res) => {
         }
         return res.status(404).json({
             status: 'fail',
-            message: 'Dropdown data is not available!.'
+            message: 'Dropdown data is not available!'
         })
     }catch(error){
         res.status(500).json({
@@ -72,4 +74,54 @@ const getAllDropdowns = async (req, res) => {
     }
 }
 
-export { createDropdown, getDropdown, getAllDropdowns }
+const editDropdown = async (req, res) => {
+    try {
+        const dropdownData = req.body;
+        dropdownData.updatedAt = new Date;
+        const dropdown = await Dropdown.findByIdAndUpdate(dropdownData._id, dropdownData);
+        if(dropdown){
+            return res.status(200).json({
+                status: 'success',
+                message: 'Dropdown updated successfully!',
+                data: {
+                    dropdown
+                }
+            })
+        }
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Error to update dropdown!'
+        })
+
+    }catch(error){
+        res.status(500).json({
+            status: 'fail',
+            message: error.message
+        })
+    }
+}
+
+const deleteDropdown = async (req, res) => {
+    try{
+        const _id = req.body._id;
+        const dropdown = await Dropdown.findByIdAndDelete(_id);
+
+        if(dropdown){
+            return res.status(200).json({
+                status: 'success',
+                message: 'Dropdown deleted successfully!'
+            })
+        }
+        return res.status(404).json({
+            status: 'fail',
+            message: 'Error to delete dropdown!'
+        })
+    }catch(error){
+        res.status(500).json({
+            status: 'fail',
+            message: error.message
+        })
+    }
+}
+
+export { createDropdown, getDropdown, getAllDropdowns, editDropdown, deleteDropdown }
