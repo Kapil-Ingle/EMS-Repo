@@ -46,10 +46,10 @@
                     {{row.createdAt | date: 'medium'}}
                   </div>
                   <div class="button">
-                    <button mat-icon-button (click)="editDropdown()" class="edit">
+                    <button mat-icon-button (click)="editDropdown(row)" class="edit">
                       <mat-icon>edit</mat-icon>
                     </button>
-                    <button mat-icon-button (click)="deleteDropdown()" class="delete">
+                    <button mat-icon-button (click)="deleteDropdown(row)" class="delete">
                       <mat-icon>delete</mat-icon>
                     </button>
                   </div>

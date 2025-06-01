@@ -27,6 +27,11 @@ export class AddConfigurationComponent {
 
   ngOnInit(){
     this.buildForm();
+    console.log('dialog data', this.data.data);
+
+    if(this.data.data){
+      this.patchForm();
+    }
   }
 
   buildForm(){
@@ -47,12 +52,14 @@ export class AddConfigurationComponent {
     this.dialogRef.close();
   }
   
-  SubmitData(){
+  submitData(){
     console.log(this.addDropdownForm);
     if(this.addDropdownForm.valid){
-      this.AuthService.authApiCall(API_ENDPOINTS.serviceName_create_dropdown,this.addDropdownForm.value).subscribe((resp: any) => {
-        console.log(`${API_ENDPOINTS.serviceName_create_dropdown} Response : `, resp);
-        this.commonService.openSnackBar('Dropdown Fetched Successful', 'success');
+      const url = this.data.data ? API_ENDPOINTS.serviceName_edit_dropdown : API_ENDPOINTS.serviceName_create_dropdown;
+      const requestData = this.data.data ? {...this.addDropdownForm.value, _id: this.data.data._id} : this.addDropdownForm.value;
+      this.AuthService.authApiCall(url,requestData).subscribe((resp: any) => {
+        console.log(`${url} Response : `, resp);
+        this.commonService.openSnackBar(resp.message, 'success');
       })
       this.dialogRef.close();
     }
@@ -66,6 +73,20 @@ export class AddConfigurationComponent {
 
   removeDropdownValue(idx: number){
     this.dropdownValues.removeAt(idx);
+  }
+
+  patchForm(){
+    this.addDropdownForm.patchValue({
+      dropdownName: this.data.data.dropdownName,
+      // dropdownValues: this.data.data.dropdownValues,
+      description: this.data.data.description
+    })
+
+    const formArray = this.addDropdownForm.get('dropdownValues') as FormArray;
+    formArray.clear();
+    this.data.data.dropdownValues.forEach((value: string) => {
+      formArray.push(this.fb.control(value, Validators.required));
+    });
   }
 
 }

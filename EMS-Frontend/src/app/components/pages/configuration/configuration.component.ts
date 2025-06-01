@@ -44,8 +44,8 @@ export class ConfigurationComponent {
     this.dataSource.sort = this.sort;
   }
 
-  openDialog() {
-    const dialogRef = this.dialog.open(AddConfigurationComponent, {width: '600', disableClose: true, data: {}});
+  openDialog(data?: any) {
+    const dialogRef = this.dialog.open(AddConfigurationComponent, {width: '600', disableClose: true, data: {data}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log(`Dialog result: ${result}`);
@@ -73,14 +73,18 @@ export class ConfigurationComponent {
     }
   }
 
-  editDropdown(){
-    console.log('Edit');
-    
+  editDropdown(dropdown: any){
+    console.log('Edit ', dropdown);
+    this.openDialog(dropdown);
   }
 
-  deleteDropdown(){
-    console.log('Delete');
-    
+  deleteDropdown(dropdown: any){
+    console.log('Delete ', dropdown);
+    this.AuthService.authApiCall(API_ENDPOINTS.serviceName_delete_dropdown, dropdown).subscribe((resp: any) => {
+      console.log(`${API_ENDPOINTS.serviceName_delete_dropdown} Response : `, resp);
+      this.commonService.openSnackBar(resp.message, 'success');
+      this.getAllDropdown();
+    })
   }
 
 }

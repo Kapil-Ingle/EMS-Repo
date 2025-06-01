@@ -38,5 +38,5 @@
 </mat-dialog-content>
 <mat-dialog-actions align="center">
   <!-- <button mat-button>No Thanks</button> -->
-  <button class="btn" mat-flat-button cdkFocusInitial (click)="SubmitData()">Submit </button>
+  <button class="btn" mat-flat-button cdkFocusInitial (click)="submitData()">{{data.data ? 'Update' : 'Submit'}} </button>
 </mat-dialog-actions>
